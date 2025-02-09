@@ -1,0 +1,20 @@
+var today=new Date();
+
+var day=today.getDay();
+
+var daylist=["sunday","monday","tuesday","wednseday","thursday","Friday","saturday"];;
+
+console.log("today is:"+daylist[day]+".");
+today is:sunday.
+
+var hour=today.getHours();
+
+var minute=today.getMinutes();
+
+var sec=today.getSeconds();
+
+console.log(hour+minute+sec);
+
+
+console.log(hour+' '+minute+' '+sec+' ');
+ 10 54 29 
