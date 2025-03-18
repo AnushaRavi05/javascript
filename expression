@@ -1,0 +1,50 @@
+A boolean expression is an expression that evaluates to either true or false. It can be in one of the following shapes:
+
+'t' that evaluates to true.
+'f' that evaluates to false.
+'!(subExpr)' that evaluates to the logical NOT of the inner expression subExpr.
+'&(subExpr1, subExpr2, ..., subExprn)' that evaluates to the logical AND of the inner expressions subExpr1, subExpr2, ..., subExprn where n >= 1.
+'|(subExpr1, subExpr2, ..., subExprn)' that evaluates to the logical OR of the inner expressions subExpr1, subExpr2, ..., subExprn where n >= 1.
+Given a string expression that represents a boolean expression, return the evaluation of that expression.
+
+var parseBoolExpr = function(expression) {
+    let stack = [];
+
+    for (let c of expression) {
+        if (c === ')') {
+            let subExpr = [];
+            while (stack[stack.length - 1] !== '(') {
+                subExpr.push(stack.pop());
+            }
+            stack.pop(); // Remove '('
+
+            let op = stack.pop(); // Get the operator
+
+            if (op === '!') {
+                stack.push(subExpr[0] === 't' ? 'f' : 't');
+            } else if (op === '&') {
+                let result = 't';
+                for (let e of subExpr) {
+                    if (e === 'f') {
+                        result = 'f';
+                        break;
+                    }
+                }
+                stack.push(result);
+            } else if (op === '|') {
+                let result = 'f';
+                for (let e of subExpr) {
+                    if (e === 't') {
+                        result = 't';
+                        break;
+                    }
+                }
+                stack.push(result);
+            }
+        } else if (c !== ',') {
+            stack.push(c);
+        }
+    }
+    
+    return stack[0] === 't';
+};
